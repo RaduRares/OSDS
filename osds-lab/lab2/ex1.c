@@ -4,7 +4,7 @@
 char *SECRET = ".hidden";
 int main() {
 	long is_admin = 0;
-	char password[8];
+	char password[8]; //avem 8 octeti la password
 	scanf("%s", password);
 	if (0 == strcmp(password, SECRET)) {
 		is_admin = 1;

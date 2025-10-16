@@ -1,0 +1,2 @@
+Q1: Putem folosi buffer overflow pentru a accesa alte zone de memorie si putem modifica alte variabile
+Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer overflow cu un octet se schimba is_admin deci punem orice sir de caractere mai mare de 8 
