@@ -1,0 +1,61 @@
+Numai .text dintr un exec se poate executa  
+Stack nu se executa
+
+
+1.
+
+cu info vad exact cum e impartit codul 
+si p &var adresa
+
+info file (pentru a vedea cum sunt registrii acestui fisier)-> p &useful (pt a vedea adresa variabilei )
+
+disassemble function 
+
+
+2. Pt a vedea file offset ma uit cu -> objdump -d binary exec_name -F
+dump memory foo.bin 0x401106 0x401150 pentru a lua exact functia din elf  , dar trebuie sa fie paginarea aliniata
+Am facut vmmap si   0x7ffff7daa000     0x7ffff7dad000 rw-p     3000       0 [anon_7ffff7daa]
+vmmap dupa mmap are o regiune cu permisiuni rw-p (read-write, private), iar dupa mprotect are read-execute
+ 
+ 
+ Am intrat in functia foo ───────────────────────────────────────────[ DISASM / x86-64 / set emulate on ]───────────────────────────────────────────
+b+ 0x7ffff7eb0770 <open64>       sub    rsp, 0x58                       RSP => 0x7fffffffd9e0 (0x7fffffffda38 - 0x58)
+   0x7ffff7eb0774 <open64+4>     mov    qword ptr [rsp + 0x30], rdx     [0x7fffffffda10] <= 0x7fffffffdbb0 —▸ 0x7fffffffdfb6 ◂— 0x5245545f5353454c ('LESS_TER')
+   0x7ffff7eb0779 <open64+9>     mov    rax, qword ptr fs:[0x28]        RAX, [0x7ffff7daa768] => 0x58f1640e9af4c00
+   0x7ffff7eb0782 <open64+18>    mov    qword ptr [rsp + 0x18], rax     [0x7fffffffd9f8] <= 0x58f1640e9af4c00
+ ► 0x7ffff7eb0787 <open64+23>    xor    eax, eax                        EAX => 0
+   0x7ffff7eb0789 <open64+25>    test   sil, 0x40                       0x0 & 0x40     EFLAGS => 0x246 [ cf PF af ZF sf IF df of ac ]
+   0x7ffff7eb078d <open64+29>  ✘ jne    open64+104                  <open64+104>
+ 
+   0x7ffff7eb078f <open64+31>    mov    eax, esi          EAX => 0x80000
+   0x7ffff7eb0791 <open64+33>    xor    ecx, ecx          ECX => 0
+   0x7ffff7eb0793 <open64+35>    not    eax
+   0x7ffff7eb0795 <open64+37>    test   eax, 0x410000     0xfff7ffff & 0x410000     EFLAGS => 0x206 [ cf PF af zf sf IF df of ac ]
+
+
+Ex3
+    Cu objdump -d se vad argumentele edi fiind primul si rsi al doilea
+      401188:       89 7d ec                mov    %edi,-0x14(%rbp)
+  40118b:       48 89 75 e0             mov    %rsi,-0x20(%rbp) in functia advertisemnt si le salveaza pe stack
+  
+  
+  pwndbg> info registers rdi rsi
+rdi            0x7ffff7f967b0      140737353705392
+rsi            0x4052a0            4215456
+
+Normal primesc SIGSEV in printf() pentru ca stak-ul nu era stabil 
+
+Am modificat registrii prin set , mai intai salvez rip ul si argumentul 
+set $saved_rip = $rip
+set $rdi = message,
+ iar apoi simulez un call de functie 
+set $rsp = $rsp - 8
+set *(long*)$rsp = $saved_rip
+set $rip = print_msg
+Si dupa continue imi da -==[ Control is an illusion. ]==-
+
+Am simulat un CALL legitim
+
+PLUS:
+1. in /proc/self/ apare si environ, care afiseaza envuri , daca aplicatia web le hosteaza apar aici 
+2.

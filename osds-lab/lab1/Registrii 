@@ -1,0 +1,26 @@
+REGISTRI GENERALE (64-bit)
+RAX, RBX, RCX, RDX - Registri de bază
+RAX (Accumulator): Rezultate operații, return value din funcții
+
+RBX (Base): Pointer la date, păstrat între apeluri
+
+RCX (Counter): Contor pentru loops (ex: rep instructions)
+
+RDX (Data): Date extra, parte high la împărțiri
+
+RSI, RDI - Registri index
+RSI (Source Index): Pointer sursă pentru operații cu string-uri
+
+RDI (Destination Index): Pointer destinație pentru operații cu string-uri
+
+RBP, RSP - Registri stack
+RBP (Base Pointer): Pointer la baza stack frame-ului curent
+
+RSP (Stack Pointer): Pointer la vârful stack-ului (varful)
+
+REGISTRI SPECIALIZAȚI
+R8 - R15 - Registri noi în x86-64
+R8-R15: Registri suplimentari pentru argumente/date
+
+RIP - Instruction Pointer
+RIP: Pointer la următoarea instrucțiune de executat

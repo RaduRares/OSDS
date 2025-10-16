@@ -1,0 +1,57 @@
+info registers
+(toți registrii)
+
+info registers rdi rsi rdx rbp rsp rip
+(register subset)
+
+p/x $rip / p $rip
+(valoare registru)
+
+x/20gx $rsp
+(afișează 20 cuvânturi 8-byte, hex)
+
+
+info frame
+(informații frame curent)
+
+info args
+(argumente funcție curentă)
+
+info locals
+(variabile locale)
+
+return
+(forțează return din funcție)
+
+stepi / si (single step instr)
+
+nexti / ni (single step instr, fără intrare în call)
+
+break main / b main
+
+break *0x401188
+
+set $rdi = 0x4052a0
+(schimbi registrul)
+
+set $rsp = $rsp - 8
+(modifici stack pointer)
+
+set *(long*)$rsp = 0x401234
+(scrii valoare pe stivă)
+
+set $rip = 0x401100
+(sari la altă instrucțiune)
+
+set {unsigned char}0x404050 = 0x90
+
+
+
+dump memory foo.bin 0x401106 0x401150
+(dump interval memorie în fișier)
+
+dump binary memory foo.bin 0x401106 0x401150
+(raw)
+
+Folosești apoi objdump -D -b binary  foo.bin pentru a dezasambla fișierul salvat.
+
