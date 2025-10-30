@@ -1,15 +1,23 @@
-Numai .text dintr un exec se poate executa  
-Stack nu se executa
 
 
+.bss -> variabile globale neinitializate
+.data -> variabile globale initializate
+.rodata -> date read-only ca sting uri si constante
+.text -> instructiuni de se executa
+
+->stack ul este la final deoarece creste in jos,
+adica pointeaza la adrese mai mici si pentru a avea 
+coliziune cu heap ul 
+
+-> 
 1.
 
-cu info vad exact cum e impartit codul 
+folosesc vmmap 
 si p &var adresa
 
-info file (pentru a vedea cum sunt registrii acestui fisier)-> p &useful (pt a vedea adresa variabilei )
+p &useful (pt a vedea adresa variabilei )
 
-disassemble function 
+disassemble function pentru a vedea cod asm
 
 
 2. Pt a vedea file offset ma uit cu -> objdump -d binary exec_name -F
@@ -39,9 +47,6 @@ Ex3
   40118b:       48 89 75 e0             mov    %rsi,-0x20(%rbp) in functia advertisemnt si le salveaza pe stack
   
   
-  pwndbg> info registers rdi rsi
-rdi            0x7ffff7f967b0      140737353705392
-rsi            0x4052a0            4215456
 
 Normal primesc SIGSEV in printf() pentru ca stak-ul nu era stabil 
 
