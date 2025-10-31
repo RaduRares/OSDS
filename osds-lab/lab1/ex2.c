@@ -8,7 +8,7 @@ int main() {
 	/* Open an executable file here */
 	/* ... */
     FILE * f = fopen("./bin/dummy","rb");
-    long offset = 0x1106;
+    long offset = 0x1106; // pt ca e no-pie orice program incepe de la 4000 si am scazut adresa functiei - 0x4000 
     size_t size= 0x4A;//am avut o problema mare ca nu am luat si octetul de return si in loc de 74 am citit 73 de octeti
    //0x40114f - 0x401106 =  0x49 + 1 
     fseek(f,offset,SEEK_SET);
