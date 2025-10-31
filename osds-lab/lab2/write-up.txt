@@ -1,5 +1,5 @@
 Q1: Putem folosi buffer overflow pentru a accesa alte zone de memorie si putem modifica alte variabile
-Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer overflow cu un octet se schimba is_admin deci punem orice sir de caractere mai mare de 8 
+Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer overflow cu un octet in plus is_admin primeste alta valoare deci punem orice sir de caractere mai mare de 8 
 Q4:
 Pentru ex 2 variabila is_admin este long adica pe 8 octeti deci payloadul va fi 8 de A pentru parola si \xef\xbe\xad\xde\x00\x00\x00\x00 pentru is_admin
  echo '\x41\x41\x41\x41\x41\x41\x41\x41\xef\xbe\xad\xde\x00\x00\x00\x00' | ./bin/ex2 
