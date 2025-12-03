@@ -1,0 +1,14 @@
+p/d (char*)($rbp+8)-(char*)name 
+Rez: 344
+
+
+[rbp+8]  = saved RIP   ← adresa de retur
+[rbp]    = saved RBP
+[rbp-...]  = variabile locale: airlines[4][64], name[64], index, padding etc.
+
+
+rip=64+4*64+16 +
+(chiar daca ar trebui 4 octeti , pentru aliniere adunam cu 16  ) + 8 ( old base stack pointer)
+
+
+din disassemble am gasit adresa de return la 0x0401472 
