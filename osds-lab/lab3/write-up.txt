@@ -1,0 +1,14 @@
+Q1 Se afla in libc, deoarece atunci cand rulam un program apare in memoria acestuia,
+mai mult decat atat are si permisiue de executie
+    0x7ffff7fc7000     0x7ffff7fc8000 r--p     1000       0 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+    0x7ffff7fc8000     0x7ffff7ff0000 r-xp    28000    1000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+    0x7ffff7ff0000     0x7ffff7ffb000 r--p     b000   29000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+    0x7ffff7ffb000     0x7ffff7ffd000 r--p     2000   34000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+    0x7ffff7ffd000     0x7ffff7ffe000 rw-p     1000   36000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+
+Q2. Vulnerabilitatea este in ex1 la  scanf("%s", name);  pentru ca putem introduce orice dimensiune de input
+deoarece %s se opreste pana la newline 
+
+Q3 Injectam shellcode suprascriind adresa de return cu adresa de return a lui system din libc
+si ii punem argumentele pe stiva, ca si cum programul ar fi apelat o normal 
+
