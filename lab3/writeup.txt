@@ -1,3 +1,16 @@
+
+Q1: Ne intereseaza lib.c care se poate si executa si
+pentru ca e no-pie nu se genereaza random locatia
+
+ 0x7ffff7fc8000     0x7ffff7ff0000 r-xp    28000    1000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+
+Q2: scanf("%s", name) e vulnerabil deoarece se termina doar daca 
+nu am newline, util pentru buffer overflow fara newline
+
+Q3: Trebuie sa se ajunga la a pune adresa pe stack a functiei 
+system din libc care are primul argument /bin/sh
+
+Q4:
 p/d (char*)($rbp+8)-(char*)name 
 Rez: 344
 
@@ -11,4 +24,6 @@ rip=64+4*64+16 +
 (chiar daca ar trebui 4 octeti , pentru aliniere adunam cu 16  ) + 8 ( old base stack pointer)
 
 
-din disassemble am gasit adresa de return la 0x0401472 
+din disassemble am gasit adresa de return la 0x401016 
+search "/bin/sh" pentru a gasi adresa /bin/sh din librarie
+
