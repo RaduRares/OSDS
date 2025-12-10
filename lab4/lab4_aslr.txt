@@ -1,0 +1,31 @@
+ASLR -> randomizează adresele unde sunt mapate binarele 
+		adresele executabilului sunt randomizate la fiecare rulare, la fel si librariile linkate (dinamice) 
+		executabilele trebuie sa fie PIE 
+
+
+.got sectiune -> Global Offset Table
+			  -> sectiune de date in ELF si contine -> pointeri catre functiile reale din librarii <- si sunt manipulate de dynamic linker
+			  
+			  
+PLT -> sectiune de cod ce contine mici functii folosite pentru -> apelarea functiilor din librarii dinamice <-
+	-> se afla in user space si este in executabil mai exact in procesul de il ruleaza
+stub -> mica functie
+
+Early binding -> rezolva toate adresele functiilor la inceput 
+			  -> completeaza toate adresele externe ale librariilor REALE  
+			  -> GOT va fi read only dupa resolutie 
+Lazy binding -> GOT are intrari semi-umplute , nu se mai cauta din prima adresele reale
+			 -> se creeaza o ferestra de timp in care poate fi atatacat
+			 -> e si write si read GOT 
+			 
+Canary valoare pusa pe stiva pentru a detecta coruperea stackului inainte de a ajunge la adresa de return
+
+Weaknesul unui ASLR
+
+Restul adreselor se calculează prin offset-uri fixe față de baza lui.
+ASLR lucreaza pe librarii 
+	-> leak libc toate functiile din libc 
+	-> leak din stack da baza stackului
+	
+ASLR schimbă doar adresa de bază a unui modul, nu și structura internă.
+Deci adresa oricărui simbol = base + offset_fixt

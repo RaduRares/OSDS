@@ -6,7 +6,7 @@ clean:
 
 ex1:
 	@if [ ! -d ./bin ]; then mkdir bin; fi
-	gcc ex1.c -o ./bin/ex1 -fno-stack-protector -no-pie -mgeneral-regs-only -g
+	gcc ex1.c -o  ./bin/ex1 -fno-stack-protector -no-pie -mgeneral-regs-only -g
 
 ex2:
 	@if [ ! -d ./bin ]; then mkdir bin; fi
